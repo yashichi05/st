@@ -11,6 +11,7 @@ function saveData(date) {
     url: `http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&date=${date}&type=ALLBUT0999`,
   }).then((resp) => {
     resp.data.pipe(fs.createWriteStream(`./csv/${date}.csv`));
+    delTodayEmpty(date)
   });
 }
 
@@ -46,5 +47,18 @@ function save10YearCsv() {
   cb();
 }
 
+function delTodayEmpty(date){
+  try {
+    if(date === moment().format(f)){
+      const data = fs.readFileSync(`./csv/${date}.csv`, null)
+      if(!data.toString()){
+        fs.unlinkSync(`./csv/${date}.csv`)
+      }
+    }
+  } catch (error) {
+    setTimeout(delTodayEmpty,1000,date)
+  }
+
+}
+
 save10YearCsv();
-// saveData(moment().format(f))
