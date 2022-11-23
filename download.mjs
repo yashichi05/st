@@ -30,16 +30,21 @@ function save10YearCsv() {
   const dateList = getDateList("20100101");
   let index = 0;
   const cb = () => {
-    const val = dateList[index]
-    if(!val) return
-    console.log(`load ${val}`)
+    const val = dateList[index];
+    if (!val) return;
+    console.log(`load ${val}`);
+    if (fs.existsSync(`./csv/${val}.csv`)) {
+      index += 1
+      return cb();
+    }
+
     saveData(val).then(() => {
       index += 1;
       setTimeout(cb, 5000);
     });
   };
-  cb()
+  cb();
 }
 
-// save10YearCsv()
-saveData(moment().format(f))
+save10YearCsv();
+// saveData(moment().format(f))
