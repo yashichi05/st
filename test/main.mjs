@@ -1,4 +1,4 @@
-import Market from "./warrant.mjs";
+import Market from "./market.mjs";
 import Holder from "./holder.mjs";
 import _ from "lodash";
 
@@ -12,7 +12,7 @@ async function start() {
   let longRate = 0;
   while (true) {
     const m = await todayMarket();
-    console.log(holder.balance)
+    console.log(`balance:${holder.balance},day:${market.day},call:${holder.callHold},put:${holder.putHold}`)
     if (m === "done") {
       break;
     }
@@ -20,8 +20,7 @@ async function start() {
     // 累加rate
     longRate += rate;
     if (Math.abs(longRate) >= 1) {
-      const isGrow = longRate > 0;
-      if (isGrow) {
+      if (longRate > 0) {
         if (holder.callHold > 0) {
           holder.sell({
             qty: Math.ceil(holder.callHold / 2),
