@@ -10,7 +10,7 @@ async function start() {
   while (true) {
     const m = await market.nextDay();
     console.log(
-      `balance:${holder.balance},day:${market.day},call:${holder.callHold},put:${holder.putHold}`
+      `balance:${parseInt(holder.balance)},day:${market.day},call:${holder.callHold},put:${holder.putHold}`
     );
     if (m === "done") {
       break;

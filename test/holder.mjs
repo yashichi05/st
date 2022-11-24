@@ -1,5 +1,5 @@
 import _ from "lodash";
-const initBalance = 3000000;
+const initBalance = 300000;
 const dayCost = 0.01;
 export default class Holder {
   balance = initBalance;
@@ -25,9 +25,10 @@ export default class Holder {
     while (this.balance - price * 1000 * qty < 0 && qty >= 1) {
       qty -= 1;
     }
-    if (!qty) return;
+    if (!qty) return 0;
     this[`${typeKey}HoldList`].push({ ...warrant, qty });
     this.balance -= price * qty * 1000;
+    return qty
   }
   sell({ qty, type }) {
     const typeKey = type ? "call" : "put";
