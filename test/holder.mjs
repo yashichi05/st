@@ -1,5 +1,5 @@
 import _ from "lodash";
-const initBalance = 300000;
+const initBalance = 3000000;
 const dayCost = 0.01;
 export default class Holder {
   balance = initBalance;
@@ -8,6 +8,9 @@ export default class Holder {
   market = null;
   constructor(market) {
     this.market = market;
+    market.onNext = ()=>{
+      this.nextDay()
+    }
   }
   get callHold() {
     return _.sumBy(this.callHoldList, (i) => i.qty);

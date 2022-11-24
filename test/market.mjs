@@ -21,6 +21,7 @@ export default class Market {
   dayIndex = 0;
   callPublicList = [{ day: this.day, price: initCallPrice }];
   putPublicList = [{ day: this.day, price: initPutPrice }];
+  onNext = ()=>{}
   get currentDay() {
     return this.dateList[this.dayIndex];
   }
@@ -66,12 +67,14 @@ export default class Market {
         const callFix = 1 + (todayRate * lever) / 100;
         const putFix = 1 + (todayRate * lever * -1) / 100;
         this.rePublic({ callFix, putFix });
+        this.onNext()
         return {
           call: this.currentCall.price,
           put: this.currentPut.price,
           rate: todayRate,
         };
       } else {
+        this.onNext()
         return this.nextDay();
       }
     });
