@@ -9,9 +9,9 @@ const holder = new Holder(market);
 async function start() {
   while (true) {
     const m = await market.nextDay();
-    console.log(
-      `balance:${parseInt(holder.balance)},day:${market.day},call:${holder.callHold},put:${holder.putHold}`
-    );
+    if (!holder.callHold && !holder.putHold) {
+      console.log(`balance:${parseInt(holder.balance)},day:${market.day}`);
+    }
     if (m === "done") {
       break;
     }
