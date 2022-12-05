@@ -15,7 +15,6 @@ async function start() {
     if (m === "done") {
       break;
     }
-    // 累加rate
     func1({ rate: m.rate, market, holder });
   }
 }
